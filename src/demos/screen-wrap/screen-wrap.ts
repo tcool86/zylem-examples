@@ -1,6 +1,6 @@
 import { createGame, createStage } from '@zylem/game-lib/core';
 import { createSprite } from '@zylem/game-lib/entity';
-import { ThrusterBehavior, ScreenWrapBehavior, useBehavior } from '@zylem/game-lib/behavior';
+import { ThrusterBehavior, ScreenWrapBehavior, type ThrusterEntity } from '@zylem/game-lib/behavior';
 import { useArrowsForAxes } from '@zylem/game-lib/input';
 import { demoAsset } from '../../assets/manifest';
 
@@ -12,7 +12,8 @@ export default function createDemo() {
 			images: [{ name: 'player-ship', file: playerShipImg }],
 		});
 
-		const playerShip = useBehavior(baseShip, ThrusterBehavior, {
+		const playerShip = baseShip as typeof baseShip & ThrusterEntity;
+		playerShip.use(ThrusterBehavior, {
 			linearThrust: 5,
 			angularThrust: 8,
 		});
